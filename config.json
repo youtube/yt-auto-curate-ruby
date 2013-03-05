@@ -1,0 +1,28 @@
+[
+  {
+    "uploads_list_id": "UU...",
+    "actions": [
+      {
+        "regex": "search term 1",
+        "playlist_id": "PL..."
+      },
+      {
+        "regex": "search term 2",
+        "bulletin": "Check out this video!"
+      }
+    ]
+  },
+  {
+    "uploads_list_id": "UU...",
+    "actions": [
+      {
+        "regex": "search term 1",
+        "playlist_id": "PL..."
+      },
+      {
+        "regex": "search term 2",
+        "bulletin": "Check out this video!"
+      }
+    ]
+  }
+]
