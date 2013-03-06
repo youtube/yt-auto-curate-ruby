@@ -1,0 +1,49 @@
+The autocurate.rb script uses the YouTube Data API v3 (https://developers.google.com/youtube/v3/)
+and the Google APIs client library for Ruby (https://code.google.com/p/google-api-ruby-client/) to
+automatically "watch" a list of videos and take action when a new video is found that meets certain
+criteria.
+
+You can "watch" anything that corresponds to a YouTube video list: any channel's uploads
+('UU' + channel id), favorites ('FL' + channel id), likes ('LL' + channel id), or any YouTube
+playlist ('PL...'). Each time the script is run, it checks for videos that have been added to the
+list since the last time it ran, so you can run it repeatedly without processing the same video
+multiple times.
+
+When you're "watching" a playlist, the titles of new videos are checked to see if they match a
+specific regular expression. If the title matches, then one or more actions are triggered.
+
+There are two types of actions that can be configured: adding the video to a playlist (in the
+currently authenticated channel) or posting a channel bulletin with a link to the video.
+
+By default, the script looks for a file called 'config.json' within the current directory and reads
+its configuration from there. Here's an example configuration with comments:
+
+  [
+    {
+      "uploads_list_id": "UU_x5XG1OV2P6uZZ5FSM9Ttw",
+      "actions": [
+        {
+          "playlist_id": "PLhBgTdAWkxeCMHYCQ0uuLyhydRJGDRNo5",
+          "regex": "YouTube Developers Live"
+        },
+        {
+          "bulletin": "A new YouTube API video was uploaded to the GoogleDevelopers channel.",
+          "regex": "YouTube"
+        }
+      ]
+    }
+  ]
+
+This configuration instructs the script to "watch" the playlist 'UU_x5XG1OV2P6uZZ5FSM9Ttw', which
+corresponds to the videos uploaded by the channel with id '_x5XG1OV2P6uZZ5FSM9Ttw'
+(i.e. http://www.youtube.com/googledevelopers).
+
+Whenever it finds a new video in that list, it attempts to match the title with two different
+regular expressions. If it matches /YouTube Developers Live/, the the video is added to the
+playlist with id 'PLhBgTdAWkxeCMHYCQ0uuLyhydRJGDRNo5' (which much belong to the currently
+authenticated channel). If it matches /YouTube/ then the video is also added as a channel bulletin
+to the currently authenticated channel, with the accompanying text 'A new YouTube API video was
+uploaded to the GoogleDevelopers channel.'
+
+Right now only the video's title is checked for matches, but it's possible to extend the script to
+check the description as well.
